@@ -1,0 +1,10 @@
+#!/bin/bash
+set -xeu
+
+# usage : bismark2bw input.bismak.cov output.bw
+
+cut -f 1-4 $1 > tmp.bg
+sort -k1,1 -k2,2n tmp.bg > tmp.sort.bg
+bedGraphToBigWig tmp.sort.bg $2 $3 
+rm tmp.bg
+rm tmp.sort.bg
