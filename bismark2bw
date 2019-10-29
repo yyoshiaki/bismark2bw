@@ -9,7 +9,7 @@ ID=$RANDOM
 echo $ID
 
 # chrをchrom.sizesに含まれるものの未選択する。
-cut -f1 data/hg38.chrom.sizes > tmp.${ID}.chr
+cut -f1 $2 > tmp.${ID}.chr
 
 grep -f tmp.${ID}.chr $1 | cut -f 1-4  > tmp.${ID}.bg
 sort -k1,1 -k2,2n tmp.${ID}.bg > tmp.${ID}.sort.bg
