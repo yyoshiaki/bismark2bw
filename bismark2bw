@@ -2,9 +2,19 @@
 set -xeu
 
 # usage : bismark2bw input.bismak.cov output.bw
+# ex. : ./bismark2bw data/example.sort.bismark.cov data/hg38.chrom.sizes data/out.bw 
 
-cut -f 1-4 $1 > tmp.bg
-sort -k1,1 -k2,2n tmp.bg > tmp.sort.bg
-bedGraphToBigWig tmp.sort.bg $2 $3 
-rm tmp.bg
-rm tmp.sort.bg
+# tmpファイルのID用に乱数を生成する。
+ID=$RANDOM
+echo $ID
+
+# chrをchrom.sizesに含まれるものの未選択する。
+cut -f1 data/hg38.chrom.sizes > tmp.${ID}.chr
+
+grep -f tmp.${ID}.chr $1 | cut -f 1-4  > tmp.${ID}.bg
+sort -k1,1 -k2,2n tmp.${ID}.bg > tmp.${ID}.sort.bg
+bedGraphToBigWig tmp.${ID}.sort.bg $2 $3 
+
+rm tmp.${ID}.chr
+rm tmp.${ID}.bg
+rm tmp.${ID}.sort.bg

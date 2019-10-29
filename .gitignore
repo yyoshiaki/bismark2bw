@@ -1,2 +1,3 @@
 ./data/*.chrom.sizes
 ./data/out.bw
+tmp*
